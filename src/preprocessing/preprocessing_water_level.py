@@ -5,6 +5,8 @@ Spyder Editor
 This is a temporary script file.
 """
 
+from datetime import datetime
+
 import matplotlib.pyplot as plt
 import os
 import pickle
@@ -106,3 +108,7 @@ df_result_preprocessed2['water_level'] = df_result_preprocessed2['water_level'].
 
 plt.figure()
 df_result_preprocessed2['water_level'] = df_result_preprocessed2['water_level'].plot()
+
+today_string = datetime.today().strftime('%Y-%m-%d')
+
+df_result_preprocessed2.to_csv('/home/theresa/Liora/Projets_fiche/Data/preprocessed_meteohydrodata' + today_string + '.csv')
