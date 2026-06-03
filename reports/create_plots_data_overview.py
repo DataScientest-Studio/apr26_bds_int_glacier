@@ -16,7 +16,7 @@ directory = '/home/theresa/Liora/Projets_fiche/Data/'
 # Create variable for directory for plots
 plot_directory = '/home/theresa/apr26_bds_int_glacier/reports/plots/'
 
-# Impport 'meteohydrodata.csv' and convert index to datetime
+# Import 'meteohydrodata.csv' and convert index to datetime
 df_result = pd.read_csv(os.path.join(directory, 'meteohydrodata2026-05-31.csv'), index_col='TIMESTAMP')
 df_result.index = pd.to_datetime(df_result.index)
 
@@ -102,10 +102,10 @@ plt.savefig(plot_directory + 'overview_radiation.png')
 plt.close()
 
 # Create plot for water level of Pegelstation Hydrologie
-df_result['water_level'].plot(color='k', marker=',')
-plt.ylabel('Water Level in m')
 df_result['water_level_ultrasound'].plot(color='g', marker=',')
 plt.ylabel('Water Level Ultrasound in m')
+df_result['water_level'].plot(color='k', marker=',')
+plt.ylabel('Water Level in m')
 plt.title('Water Level at Pegelstation Hydrologie')
 plt.autoscale(enable=True, axis='x', tight=True)
 plt.legend()
