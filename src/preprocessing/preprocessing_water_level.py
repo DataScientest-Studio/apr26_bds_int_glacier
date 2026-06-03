@@ -21,7 +21,7 @@ water_level_winter = 5
 directory = '/home/theresa/Liora/Projets_fiche/Data/'
 
 # Impport 'meteohydrodata.csv' and convert index to datetime
-df_result = pd.read_csv(os.path.join(directory, 'meteohydrodata.csv'), index_col='TIMESTAMP')
+df_result = pd.read_csv(os.path.join(directory, 'meteohydrodata2026-05-31.csv'), index_col='TIMESTAMP')
 df_result.index = pd.to_datetime(df_result.index)
 
 # Import the events at Pegelstation
@@ -107,7 +107,7 @@ for k, g in groupby(enumerate(df_result_preprocessed2['water_level'].isna()), la
 df_result_preprocessed2['water_level'] = df_result_preprocessed2['water_level'].interpolate()
 
 plt.figure()
-df_result_preprocessed2['water_level'] = df_result_preprocessed2['water_level'].plot()
+df_result_preprocessed2['water_level'].plot()
 
 today_string = datetime.today().strftime('%Y-%m-%d')
 
