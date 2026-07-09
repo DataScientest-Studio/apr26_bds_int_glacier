@@ -21,7 +21,7 @@ df_result = pd.read_csv(os.path.join(directory, 'meteohydrodata2026-05-31.csv'),
 df_result.index = pd.to_datetime(df_result.index)
 
 # Create plot for air temperature of Pegelstation Meteorologie and Schwarzkögele
-df_result[['PM_temperature', 'SK_temperature']].plot(color=['r','b'], legend=True)
+df_result[['PM_temperature', 'SK_temperature']].plot(color=['r','b'], legend=True, linewidth=0.2, alpha=0.5)
 plt.ylabel('Temperature in °C')
 plt.title('Air Temperature at Pegelstation Meteorologie and Schwarzkögele')
 plt.autoscale(enable=True, axis='x', tight=True)
@@ -29,7 +29,7 @@ plt.savefig(plot_directory + 'overview_temperature.png')
 plt.close()
 
 # Create plot for atmospheric pressure of Pegelstation Meteorologie
-df_result['PM_atmospheric_pressure'].plot(color='r', legend=True)
+df_result['PM_atmospheric_pressure'].plot(color='r', legend=True, linewidth=0.2, alpha=0.5)
 plt.ylabel('Atmospheric Pressure in hPa')
 plt.title('Atmospheric Pressure at Pegelstation Meteorologie')
 plt.autoscale(enable=True, axis='x', tight=True)
@@ -37,7 +37,7 @@ plt.savefig(plot_directory + 'overview_pressure.png')
 plt.close()
 
 # Create plot for relative humidity of Pegelstation Meteorologie and Schwarzkögele
-df_result[['SK_relative_humidity', 'PM_relative_humidity']].plot(color=['r','b'])
+df_result[['SK_relative_humidity', 'PM_relative_humidity']].plot(color=['r','b'], linewidth=0.2, alpha=0.5)
 plt.ylabel('Relative humidity in %')
 plt.title('Relative Humidity at Pegelstation Meteorologie and Schwarzkögele')
 plt.autoscale(enable=True, axis='x', tight=True)
@@ -60,7 +60,7 @@ plt.savefig(plot_directory + 'overview_precipitation.png')
 plt.close()
 
 # Create plot for snow height of Pegelstation Meteorologie
-df_result['PM_snow_height'].plot(color='r', legend=True)
+df_result['PM_snow_height'].plot(color='r', legend=True, linewidth=0.2, alpha=0.5)
 plt.ylabel('Snow Height in hPa')
 plt.title('Snow Height at Pegelstation Meteorologie')
 plt.autoscale(enable=True, axis='x', tight=True)
@@ -102,9 +102,9 @@ plt.savefig(plot_directory + 'overview_radiation.png')
 plt.close()
 
 # Create plot for water level of Pegelstation Hydrologie
-df_result['water_level_ultrasound'].plot(color='g', marker=',')
+df_result['water_level_ultrasound'].plot(color='g', marker=',', linewidth=0.2, alpha=0.5)
 plt.ylabel('Water Level Ultrasound in m')
-df_result['water_level'].plot(color='k', marker=',')
+df_result['water_level'].plot(color='k', marker=',', linewidth=0.2, alpha=0.5)
 plt.ylabel('Water Level in m')
 plt.title('Water Level at Pegelstation Hydrologie')
 plt.autoscale(enable=True, axis='x', tight=True)
