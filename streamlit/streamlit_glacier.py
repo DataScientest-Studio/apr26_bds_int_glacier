@@ -5,18 +5,19 @@ Created on Thu Jul  9 09:57:48 2026
 
 @author: theresa
 """
+
+import pandas as pd
 import streamlit as st
 
 st.title('Modelling the Water Level')
 st.header('of a Glacier Stream using Meteorological Data')
 st.sidebar.title("Table of contents")
 pages = ['Project Description', 
-         'Data Description',
          'Data Visualization',
          'Data Preprocessing',
          'Data Analysis',
          'Feature Engineering',
-         'Modelling',
+         'Modeling',
          'Conclusion']
 page = st.sidebar.radio("Go to", pages)
 
@@ -30,97 +31,42 @@ if page == pages[0]:
     st.markdown('- wind speed and direction')
     st.markdown('- precipitation and snow height')
     st.markdown('- short wave radiation downwards and upwards')
-    st.write('measured at two measurement stations at 2640 m and 3080 m in the vicinity of the glacier.')
+    st.write('measured at two measurement stations at 2640 m and 3080 m in the vicinity of the glacier from January 1, 2013 to December 31, 2024 in steps of 5 minutes.')
     st.subheader('Issues')
-    st.write('The problem is not a conventional data science problem:')
+    st.write('The problem of the project is not a conventional data science problem:')
     st.markdown('- It is not a typical regression problem because the time dependence spoils the independence between the observations.')
     st.markdown('- It is not a typical time series problem because it is not the prediction of the water level from the previous water levels.')
-    
-if page == pages[1]:
-    st.header("Data Description")
-    st.write('Data from January 1, 2013 to December 31, 2024 in steps of 5 minutes')
-    st.write('Data in a text file with comma-separated values of 160.3 MB')    
-    st.subheader('Hydrological Data from one measurement station')
-    st.markdown('Measurement station at 2640 m (Pegelstation Hydrologie)')
-    st.markdown('- water level from a gauge measurement (water_level)')
-    st.markdown('- water level from a measurement with ultrasound (water_level_ultrasound)')
-    st.subheader('Meteorological Data from two measurement stations')
-    st.markdown('Measurement station at 2640 m (Pegelstation Meteorologie')
-    st.markdown('- air temperature (PM_temperature)')
-    st.markdown('- atmospheric pressure (PM_atmospheric_pressure)')
-    st.markdown('- relative humidity (PM_relative_humidity)')
-    st.markdown('- precipitation (PM_precipitation)')
-    st.markdown('- cumulative precipitation (PM_precipitation_cum)')
-    st.markdown('- snow height (PM_snow_height)')
-    st.markdown('- wind speed (PM_wind_speed)')
-    st.markdown('- wind direction (PM_wind_direction)')
-    st.markdown('- short wave radiation downwards (PM_SWD)')
-    st.markdown('- short wave radiation upwards (PM_SWU)')
-    st.markdown('Measurement station at 3080 m (Schwarzkögele)')
-    st.markdown('- air temperature (SK_temperature)')
-    st.markdown('- relative humidity (SK_relative_humidity)')
-    st.markdown('- wind speed (SK_wind_speed)')
-    st.markdown('- wind direction (SK_wind_direction)')
 
-if page == pages[2]: 
-    st.header("Data Visualization")
+if page == pages[1]: 
+    st.header("Data Visualization of some variables")
     
-    choice = ['Water Level', 'Air Temperatures', 'Atmospheric Pressure', 'Relative Humidity', 'Precipitation', 'Snow Height', 'Wind Speed', 'Wind Direction', 'Short Wave Radiation']
-    option = st.selectbox('Variable', choice)
-    display = st.radio('Measurement interval', ('all data', 'one day'))
-    if display == 'all data':
-        if option == 'Water Level':
-            st.image('plots/overview_water_level.png')
-        elif option == 'Air Temperatures':
-            st.image('plots/overview_temperature.png')
-        elif option == 'Atmospheric Pressure':
-            st.image('plots/overview_pressure.png')
-        elif option == 'Relative Humidity':
-            st.image('plots/overview_humidity.png')
-        elif option == 'Precipitation':
-            st.image('plots/overview_precipitation.png')
-        elif option == 'Snow Height':
-            st.image('plots/overview_snow.png')
-        elif option == 'Wind Speed':
-            st.image('plots/overview_wind_speed.png')
-        elif option == 'Wind Direction':
-            st.image('plots/overview_wind_direction.png')
-        elif option == 'Short Wave Radiation':
-            st.image('plots/overview_radiation.png')
-    elif display == 'one day':
-        if option == 'Water Level':
-            st.image('plots/overview_water_level_2days.png')
-        elif option == 'Air Temperatures':
-            st.image('plots/overview_temperature_2days.png')
-        elif option == 'Atmospheric Pressure':
-            st.image('plots/overview_pressure_2days.png')
-        elif option == 'Relative Humidity':
-            st.image('plots/overview_humidity_2days.png')
-        elif option == 'Precipitation':
-            st.image('plots/overview_precipitation_2days.png')
-        elif option == 'Snow Height':
-            st.image('plots/overview_snow_2days.png')
-        elif option == 'Wind Speed':
-            st.image('plots/overview_wind_speed_2days.png')
-        elif option == 'Wind Direction':
-            st.image('plots/overview_wind_direction_2days.png')
-        elif option == 'Short Wave Radiation':
-            st.image('plots/overview_radiation_2days.png')
+    st.subheader('Water Level')
+    st.image('plots/overview_water_level.png')
     
-if page == pages[3]:
+    st.subheader('Air Temperatures')
+    st.image('plots/overview_temperature.png')
+    
+    st.subheader('Snow Height')
+    st.image('plots/overview_snow.png')
+    
+    st.subheader('Wind Direction')
+    st.image('plots/overview_wind_direction_2days.png')
+    
+if page == pages[2]:
     st.header("Data Preprocessing")
     st.subheader('Preprocessing of the target variable water_level')
-    st.markdown('- large time gaps of water_level are filled with adjusted values of water_level_ultrasound')
+    st.markdown('- water_level is set to 5 cm in winter')
+    st.markdown('- other large time gaps of water_level are filled with adjusted values of water_level_ultrasound')
     st.markdown('- remaining small gaps are interpolated')
     st.subheader('Preprocessing of the other variables')
     st.markdown('- Forward Shifting for gaps of less than a day')
     st.markdown('- Forward Filling for longer gaps')
     
-if page == pages[4]:
+if page == pages[3]:
     st.header("Data Analysis")
-    st.image('Corr_matrix.png', caption='Correlation Matrix', width='stretch')
+    st.image('Corr_matrix.png', width='stretch')
 
-if page == pages[5]:
+if page == pages[4]:
     st.header("Feature Engineering")
     st.subheader("Feature Engineering for Machine Learning Models")
     st.markdown('-')
@@ -132,14 +78,55 @@ if page == pages[5]:
     st.markdown('- Conversion of the cumulative precipitation in variables precipitation and evaporation')
     st.markdown('- Deletion of variables because of faulty and redundant measurements')
 
-if page == pages[6]:
-    st.header("Modelling")
+if page == pages[5]:
+    st.header("Modeling")
     st.subheader('Model Application of Machine Learning Models')
     st.markdown('-')
     
     st.subheader('Model Application of Deep Learning Models')
-    st.markdown('- ')
+    st.markdown('- To feed data to a neural net a CustomDataset was defined in Pytorch:')
+    st.markdown('- It divides the input data into continuous chunks of data on the time axis with a given time span.')
+    st.markdown('- The chunks overlap each other.')
+    st.markdown('- A model is trained with these chunks.')
+    st.markdown('- For the metric and the output of the model an output of the model is computed by averaging the output chunks of the model on their position of the time axis.')
+    st.markdown('- The chosen metric for validation and testing is mean absolute error.')
+    st.markdown('- Training Dataset: 70\%, Validation Dataset: 15\%, Test Dataset: 15\%')
+    st.markdown('- Architecture of first model:')
+
+    st.write('Sequential(')
+    st.write('(0): Conv2d(1, 2, kernel_size=(3, 1), stride=(1, 1))')
+    st.write('(1): ReLU()')
+    st.write('(2): MaxPool2d(kernel_size=(4, 1), stride=(4, 1), padding=0, dilation=1, ceil_mode=False)')
+    st.write('(3): Conv2d(2, 4, kernel_size=(7, 1), stride=(1, 1))')
+    st.write('(4): ReLU()')
+    st.write('(5): MaxPool2d(kernel_size=(4, 1), stride=(4, 1), padding=0, dilation=1, ceil_mode=False)')
+    st.write('(6): Flatten(start_dim=1, end_dim=-1)')
+    st.write('(7): Linear(in_features=768, out_features=288, bias=True)')
     
-if page == pages[7]:
-    st.header("Conclusion")
+    st.markdown('- Graphical presentation of the result of the first model:')
+    st.image('model_PM_0_result.png', width='stretch')
+    
+    st.markdown('- Results for 4 different models:')
+    results = pd.DataFrame(
+        {
+        "model_PM_0": [8.73, 10.74, '1 day'],
+        "model_all_0": [6.7, 9.2, '1 day'],
+        "model_pm_1": [5.87, 8.41, '7 days'],
+        "model_all_1": [6.49, 9.38, '7 days'],
+        },
+        index=["mean absolute error", "rmse", "time span"])
+    st.table(results)
+
+if page == pages[6]:
+    st.header("Conclusion and Outlook")
+    st.subheader('Conclusion for Machine Learning Models')
+    
+    st.subheader('Conclusion on Deep Learning Models')
+    st.markdown('- It was possible to get a Deep Learning Model running.')
+    st.markdown('- The results are only as good a linear regression.')
+    st.markdown('- There is very likely improvement on the data loading part possible leading to much lower computation times.')
+    st.markdown('- There are a lot of model architectures to be tried out.')
+    st.subheader('Outlook')
+    st.markdown('- Gain more experience on neural networks and their set up')
+    st.markdown('- Try again')
         
